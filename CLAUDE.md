@@ -17,7 +17,7 @@ python -m http.server 8000   # then http://localhost:8000
 ## Architecture (`game.js`)
 
 - **Global mutable state**: `board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId` are module-level `let`s, (re)initialized in `init()`. `init()` is also the restart handler.
-- **Cell encoding**: the piece type index (1–7) doubles as the color index. `PIECES[type]` matrices store `type` in filled cells, `merge()` copies those values into `board`, and `drawBlock` looks up `COLORS[value]`. Adding/reordering pieces requires keeping `PIECES` and `COLORS` aligned and updating the `* 7` in `randomPiece()`.
+- **Cell encoding**: the piece type index (1–8; 8 = "tuerca", a 3×3 ring challenge piece) doubles as the color index. `PIECES[type]` matrices store `type` in filled cells, `merge()` copies those values into `board`, and `drawBlock` looks up `COLORS[value]`. Adding/reordering pieces requires keeping `PIECES` and `COLORS` aligned; `randomPiece()` picks uniformly over `PIECES.length - 1`.
 - **Pieces** are `{ type, shape, x, y }`; `shape` is a square matrix copied from `PIECES`. Rotation = `rotateCW` (transpose + reverse); `tryRotate` applies simple horizontal kicks `[0,-1,1,-2,2]` (not SRS).
 - **Collision** (`collide(shape, ox, oy)`) is the single source of truth for movement, rotation, ghost (`ghostY`), and game-over detection in `spawn()`. Cells with `ny < 0` are allowed (above board).
 - **Loop**: `requestAnimationFrame` accumulates `dt` into `dropAccum`; gravity step when it exceeds `dropInterval`. Pause/game over cancel the RAF via `animId`; resume restarts `loop` with a fresh `lastTime`.
