@@ -61,6 +61,11 @@ jobs:
                - ### Preguntas abiertas — información que falta en el issue (o "Ninguna").
                - ### Complejidad estimada — baja / media / alta, con una línea de justificación.
                Sé conciso y concreto; este diagnóstico se usará después para implementar la solución.
+               FORMATO: todo el contenido debe ser Markdown válido para GitHub (GitHub Flavored Markdown),
+               ya que se publicará tal cual como comentario del issue. Usa listas con `-`, listas de tareas
+               `- [ ]` para los criterios de aceptación, `código en línea` para archivos/funciones y bloques
+               de código con triple backtick y lenguaje (ej. ```js). No uses HTML crudo ni sintaxis que
+               GitHub no renderice, y no envuelvas todo el documento en un bloque de código.
 
       - name: Publicar diagnóstico
         env:
