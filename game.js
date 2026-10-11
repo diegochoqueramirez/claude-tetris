@@ -254,6 +254,8 @@ function loop(ts) {
     }
   }
   draw();
+  // endGame() dentro de este frame no puede cancelar el RAF en curso: no reprogramar
+  if (gameOver) return;
   animId = requestAnimationFrame(loop);
 }
 
